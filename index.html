@@ -857,3 +857,333 @@
                     <div class="simulator-title">Trade-Off Simulator: Cost vs Service Level</div>
                     
                     <!-- Simulator Controls -->
+                    <div class="simulator-controls">
+                        <div class="control-group">
+                            <label for="airFreightSlider">Air Freight %: <span class="range-value" id="airFreightValue">2.1%</span></label>
+                            <input type="range" id="airFreightSlider" min="0" max="10" step="0.1" value="2.1" oninput="updateSimulator()">
+                        </div>
+                        <div class="control-group">
+                            <label for="railShiftSlider">Rail Shift %: <span class="range-value" id="railShiftValue">18%</span></label>
+                            <input type="range" id="railShiftSlider" min="10" max="30" step="1" value="18" oninput="updateSimulator()">
+                        </div>
+                        <div class="control-group">
+                            <label for="safetyStockSlider">Safety Stock: <span class="range-value" id="safetyStockValue">45 days</span></label>
+                            <input type="range" id="safetyStockSlider" min="30" max="60" step="1" value="45" oninput="updateSimulator()">
+                        </div>
+                        <div class="control-group">
+                            <label for="scenarioSelect">Quick Scenarios:</label>
+                            <select id="scenarioSelect" onchange="applyScenario()">
+                                <option value="current">Current State</option>
+                                <option value="emergency">Emergency Mode</option>
+                                <option value="sustainable">Sustainable Focus</option>
+                                <option value="cost-optimized">Cost Optimized</option>
+                                <option value="peak-season">Peak Season</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="quadrant-chart">
+                        <div class="quadrant-grid"></div>
+                        <div class="center-lines"></div>
+                        
+                        <!-- Quadrant Labels -->
+                        <div class="quadrant-labels top-left">High Service<br>High Cost</div>
+                        <div class="quadrant-labels top-right">Optimal Zone<br>High Service, Lower Cost</div>
+                        <div class="quadrant-labels bottom-left">Poor Performance<br>Low Service, High Cost</div>
+                        <div class="quadrant-labels bottom-right">Cost Focus<br>Lower Service, Low Cost</div>
+                        
+                        <!-- Data Points -->
+                        <div class="data-point active" id="currentPoint" style="left: 60%; bottom: 70%; background: #10b981;" 
+                             onclick="selectPoint('current')" title="Current State"></div>
+                        <div class="data-point" id="emergencyPoint" style="left: 25%; bottom: 85%; background: #ef4444;" 
+                             onclick="selectPoint('emergency')" title="Emergency Mode"></div>
+                        <div class="data-point" id="sustainablePoint" style="left: 75%; bottom: 78%; background: #3b82f6;" 
+                             onclick="selectPoint('sustainable')" title="Sustainable Focus"></div>
+                        <div class="data-point" id="costPoint" style="left: 80%; bottom: 45%; background: #f59e0b;" 
+                             onclick="selectPoint('cost')" title="Cost Optimized"></div>
+                        <div class="data-point" id="peakPoint" style="left: 45%; bottom: 82%; background: #8b5cf6;" 
+                             onclick="selectPoint('peak')" title="Peak Season"></div>
+                        
+                        <!-- Axis Labels -->
+                        <div class="axis-labels x-axis-label">Cost Efficiency →</div>
+                        <div class="axis-labels y-axis-label">Service Level →</div>
+                        
+                        <!-- Legend -->
+                        <div class="legend">
+                            <div class="legend-item" onclick="selectPoint('current')">
+                                <span class="status-indicator" style="background: #10b981;"></span>Current State
+                            </div>
+                            <div class="legend-item" onclick="selectPoint('emergency')">
+                                <span class="status-indicator" style="background: #ef4444;"></span>Emergency Mode
+                            </div>
+                            <div class="legend-item" onclick="selectPoint('sustainable')">
+                                <span class="status-indicator" style="background: #3b82f6;"></span>Sustainable Focus
+                            </div>
+                            <div class="legend-item" onclick="selectPoint('cost')">
+                                <span class="status-indicator" style="background: #f59e0b;"></span>Cost Optimized
+                            </div>
+                            <div class="legend-item" onclick="selectPoint('peak')">
+                                <span class="status-indicator" style="background: #8b5cf6;"></span>Peak Season
+                            </div>
+                        </div>
+                        
+                        <!-- Scenario Info -->
+                        <div class="scenario-info" id="scenarioInfo">
+                            <strong>Current State</strong><br>
+                            Service Level: 94.2%<br>
+                            Cost Efficiency: 91.3%<br>
+                            Air Freight: 2.1%<br>
+                            Rail Share: 18%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data management
+        const regionData = {
+            'all': {
+                perfectOrder: '94.2%',
+                scCost: '8.7%',
+                cycleTime: '12.4',
+                throughput: '€2.1M',
+                inventory: { value: '45 Days', width: '75%', class: 'gauge-good' },
+                bedroom: '65%',
+                kitchen: '92%',
+                livingRoom: '78%'
+            },
+            'europe': {
+                perfectOrder: '96.1%',
+                scCost: '8.2%',
+                cycleTime: '11.8',
+                throughput: '€1.2M',
+                inventory: { value: '43 Days', width: '80%', class: 'gauge-good' },
+                bedroom: '78%',
+                kitchen: '94%',
+                livingRoom: '85%'
+            },
+            'north-america': {
+                perfectOrder: '91.5%',
+                scCost: '9.3%',
+                cycleTime: '13.2',
+                throughput: '€0.6M',
+                inventory: { value: '48 Days', width: '65%', class: 'gauge-warning' },
+                bedroom: '58%',
+                kitchen: '89%',
+                livingRoom: '72%'
+            },
+            'asia-pacific': {
+                perfectOrder: '95.8%',
+                scCost: '8.1%',
+                cycleTime: '11.9',
+                throughput: '€0.3M',
+                inventory: { value: '42 Days', width: '85%', class: 'gauge-good' },
+                bedroom: '82%',
+                kitchen: '96%',
+                livingRoom: '88%'
+            }
+        };
+
+        const categoryData = {
+            'bedroom': { bedroom: '65%', kitchen: '—', livingRoom: '—' },
+            'kitchen': { bedroom: '—', kitchen: '92%', livingRoom: '—' },
+            'living-room': { bedroom: '—', kitchen: '—', livingRoom: '78%' }
+        };
+
+        // Filter handling
+        function handleFilterChange() {
+            const region = document.getElementById('regionFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            
+            // Add visual feedback
+            document.getElementById('regionFilter').classList.add('filter-changed');
+            document.getElementById('categoryFilter').classList.add('filter-changed');
+            
+            setTimeout(() => {
+                document.getElementById('regionFilter').classList.remove('filter-changed');
+                document.getElementById('categoryFilter').classList.remove('filter-changed');
+            }, 1000);
+
+            updateDashboard(region, category);
+        }
+
+        function handleDateChange() {
+            const dateInput = document.getElementById('dateFilter');
+            dateInput.classList.add('filter-changed');
+            
+            setTimeout(() => {
+                dateInput.classList.remove('filter-changed');
+            }, 1000);
+
+            updateTimestamp();
+        }
+
+        function updateDashboard(region, category) {
+            const data = regionData[region] || regionData['all'];
+            
+            // Update KPIs
+            document.getElementById('perfectOrderRate').textContent = data.perfectOrder;
+            document.getElementById('scCost').textContent = data.scCost;
+            document.getElementById('cycleTime').textContent = data.cycleTime;
+            document.getElementById('dailyThroughput').textContent = data.throughput;
+
+            // Update inventory gauge
+            const inventoryGauge = document.getElementById('inventoryGauge');
+            const inventoryValue = document.getElementById('inventoryValue');
+            inventoryGauge.style.width = data.inventory.width;
+            inventoryGauge.className = `gauge-fill ${data.inventory.class}`;
+            inventoryValue.textContent = data.inventory.value;
+
+            // Update stock levels
+            document.getElementById('bedroomStock').textContent = data.bedroom;
+            document.getElementById('kitchenStock').textContent = data.kitchen;
+            document.getElementById('livingRoomStock').textContent = data.livingRoom;
+
+            // Update chart animations
+            animateCharts();
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            }) + ', ' + now.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit'
+            }) + ' UTC';
+            
+            document.getElementById('lastUpdated').textContent = `Last Updated: ${timestamp}`;
+        }
+
+        function animateCharts() {
+            const charts = ['inventoryChart', 'transportChart', 'sourcingChart', 'warehouseChart'];
+            
+            charts.forEach(chartId => {
+                const bars = document.querySelectorAll(`#${chartId} .chart-bar`);
+                bars.forEach((bar, index) => {
+                    const height = Math.random() * 40 + 60; // Random height between 60-100%
+                    setTimeout(() => {
+                        bar.style.height = `${height}%`;
+                    }, index * 100);
+                });
+            });
+        }
+
+        // Simulator functionality
+        const scenarios = {
+            current: { airFreight: 2.1, railShift: 18, safetyStock: 45, service: 94.2, cost: 91.3 },
+            emergency: { airFreight: 8.5, railShift: 12, safetyStock: 55, service: 98.1, cost: 65.2 },
+            sustainable: { airFreight: 0.8, railShift: 28, safetyStock: 42, service: 92.8, cost: 89.7 },
+            'cost-optimized': { airFreight: 1.2, railShift: 25, safetyStock: 38, service: 89.5, cost: 94.8 },
+            'peak-season': { airFreight: 4.2, railShift: 15, safetyStock: 52, service: 96.7, cost: 78.3 }
+        };
+
+        function updateSimulator() {
+            const airFreight = parseFloat(document.getElementById('airFreightSlider').value);
+            const railShift = parseInt(document.getElementById('railShiftSlider').value);
+            const safetyStock = parseInt(document.getElementById('safetyStockSlider').value);
+
+            document.getElementById('airFreightValue').textContent = `${airFreight}%`;
+            document.getElementById('railShiftValue').textContent = `${railShift}%`;
+            document.getElementById('safetyStockValue').textContent = `${safetyStock} days`;
+
+            // Calculate impact on service and cost
+            const serviceImpact = calculateServiceLevel(airFreight, railShift, safetyStock);
+            const costImpact = calculateCostEfficiency(airFreight, railShift, safetyStock);
+
+            // Move current point
+            const currentPoint = document.getElementById('currentPoint');
+            currentPoint.style.left = `${costImpact}%`;
+            currentPoint.style.bottom = `${serviceImpact}%`;
+
+            updateScenarioInfo('current', serviceImpact, costImpact, airFreight, railShift);
+        }
+
+        function calculateServiceLevel(airFreight, railShift, safetyStock) {
+            // Simplified calculation for demonstration
+            let service = 70;
+            service += airFreight * 2.5; // Air freight improves service
+            service += (safetyStock - 30) * 0.4; // Higher stock improves service
+            service += (railShift - 10) * 0.3; // Rail shift slightly improves service
+            return Math.min(95, Math.max(30, service));
+        }
+
+        function calculateCostEfficiency(airFreight, railShift, safetyStock) {
+            // Simplified calculation for demonstration
+            let cost = 90;
+            cost -= airFreight * 3; // Air freight reduces cost efficiency
+            cost += (railShift - 10) * 0.5; // Rail shift improves cost
+            cost -= (safetyStock - 30) * 0.2; // Higher stock reduces cost efficiency
+            return Math.min(95, Math.max(20, cost));
+        }
+
+        function applyScenario() {
+            const scenario = document.getElementById('scenarioSelect').value;
+            const data = scenarios[scenario];
+
+            if (data) {
+                document.getElementById('airFreightSlider').value = data.airFreight;
+                document.getElementById('railShiftSlider').value = data.railShift;
+                document.getElementById('safetyStockSlider').value = data.safetyStock;
+                updateSimulator();
+                selectPoint(scenario);
+            }
+        }
+
+        function selectPoint(pointId) {
+            // Remove active class from all points
+            document.querySelectorAll('.data-point').forEach(point => {
+                point.classList.remove('active');
+            });
+
+            // Add active class to selected point
+            const selectedPoint = document.getElementById(pointId + 'Point');
+            if (selectedPoint) {
+                selectedPoint.classList.add('active');
+            }
+
+            // Update scenario info
+            const scenario = scenarios[pointId];
+            if (scenario) {
+                updateScenarioInfo(pointId, scenario.service, scenario.cost, scenario.airFreight, scenario.railShift);
+            }
+        }
+
+        function updateScenarioInfo(scenario, service, cost, airFreight, railShift) {
+            const info = document.getElementById('scenarioInfo');
+            const scenarioNames = {
+                current: 'Current State',
+                emergency: 'Emergency Mode',
+                sustainable: 'Sustainable Focus',
+                'cost-optimized': 'Cost Optimized',
+                'peak-season': 'Peak Season'
+            };
+
+            info.innerHTML = `
+                <strong>${scenarioNames[scenario] || 'Custom'}</strong><br>
+                Service Level: ${service.toFixed(1)}%<br>
+                Cost Efficiency: ${cost.toFixed(1)}%<br>
+                Air Freight: ${airFreight}%<br>
+                Rail Share: ${railShift}%
+            `;
+            info.classList.add('visible');
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTimestamp();
+            animateCharts();
+            
+            // Set up periodic updates
+            setInterval(() => {
+                updateTimestamp();
+                animateCharts();
+            }, 30000); // Update every 30 seconds
+        });
+    </script>
+</body>
+</html>
