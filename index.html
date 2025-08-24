@@ -12,178 +12,225 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
         
         .dashboard {
             max-width: 1400px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             overflow: hidden;
         }
         
         .header {
-            background: linear-gradient(135deg, #0051a0 0%, #0033cc 100%);
+            background: linear-gradient(135deg, #0058a3 0%, #003d82 100%);
             color: white;
-            padding: 20px;
+            padding: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
         .logo-section h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
         
         .logo-section p {
             opacity: 0.9;
             font-size: 14px;
+            font-weight: 400;
         }
         
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 24px;
         }
         
         .kpi-card {
             text-align: center;
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
+            background: rgba(255,255,255,0.15);
+            padding: 20px 16px;
             border-radius: 8px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .kpi-value {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1;
         }
         
         .kpi-label {
             font-size: 12px;
-            opacity: 0.9;
+            opacity: 0.85;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .main-content {
             display: grid;
-            grid-template-columns: 250px 1fr;
+            grid-template-columns: 280px 1fr;
             min-height: 800px;
         }
         
         .sidebar {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 24px;
             border-right: 1px solid #e9ecef;
         }
         
         .filter-section {
-            margin-bottom: 25px;
+            margin-bottom: 28px;
         }
         
         .filter-section h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
+            font-size: 13px;
+            margin-bottom: 12px;
             color: #495057;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            font-weight: 600;
         }
         
         .filter-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
         
         .filter-group select, .filter-group input {
             width: 100%;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border: 1px solid #ced4da;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        .filter-group select:focus, .filter-group input:focus {
+            border-color: #0058a3;
+            box-shadow: 0 0 0 0.2rem rgba(0, 88, 163, 0.15);
+            outline: none;
+        }
+        
+        .filter-changed {
+            background-color: #fff3cd !important;
+            border-color: #ffc107 !important;
         }
         
         .alerts-section {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 20px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .alerts-section h3 {
+            font-size: 13px;
+            margin-bottom: 16px;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
         }
         
         .alert-item {
             display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.4;
         }
         
         .alert-critical {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
         }
         
         .alert-warning {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
         }
         
         .alert-info {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
         }
         
         .dashboard-content {
-            padding: 20px;
+            padding: 24px;
             background: white;
         }
         
         .levers-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 24px;
+            margin-bottom: 32px;
         }
         
         .lever-card {
             background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .lever-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #d1d5db;
         }
         
         .lever-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f3f4f6;
         }
         
         .lever-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
-            color: #495057;
+            color: #111827;
+        }
+        
+        .lever-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
         }
         
         .lever-gauge {
-            width: 120px;
-            height: 60px;
+            width: 140px;
+            height: 70px;
             position: relative;
-            margin: 0 auto 15px;
+            margin: 0 auto 20px;
         }
         
         .gauge-bg {
             width: 100%;
             height: 100%;
-            border-radius: 120px 120px 0 0;
-            background: #e9ecef;
+            border-radius: 140px 140px 0 0;
+            background: #f3f4f6;
             position: relative;
             overflow: hidden;
         }
@@ -193,70 +240,127 @@
             bottom: 0;
             left: 0;
             height: 100%;
-            border-radius: 120px 120px 0 0;
+            border-radius: 140px 140px 0 0;
             transform-origin: center bottom;
+            transition: width 0.6s ease;
         }
         
-        .gauge-good { background: linear-gradient(90deg, #28a745, #20c997); }
-        .gauge-warning { background: linear-gradient(90deg, #ffc107, #fd7e14); }
-        .gauge-critical { background: linear-gradient(90deg, #dc3545, #e83e8c); }
+        .gauge-good { 
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+        .gauge-warning { 
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+        .gauge-critical { 
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
         
         .gauge-text {
             position: absolute;
-            bottom: -5px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            font-weight: bold;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #111827;
         }
         
         .chart-area {
             height: 120px;
-            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
-            border-radius: 4px;
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6c757d;
-            font-size: 12px;
             position: relative;
             overflow: hidden;
+            border: 1px solid #e5e7eb;
         }
         
         .chart-bars {
             display: flex;
             align-items: end;
             height: 80px;
-            gap: 3px;
+            gap: 4px;
         }
         
         .chart-bar {
-            width: 12px;
-            background: linear-gradient(180deg, #0051a0, #007bff);
-            border-radius: 2px 2px 0 0;
+            width: 14px;
+            background: linear-gradient(180deg, #0058a3, #003d82);
+            border-radius: 3px 3px 0 0;
+            transition: height 0.5s ease;
         }
         
         .simulator-section {
             background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            border: 1px solid #e9ecef;
         }
         
         .simulator-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: #495057;
-            margin-bottom: 15px;
+            color: #111827;
+            margin-bottom: 20px;
             text-align: center;
+        }
+        
+        .simulator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .control-group label {
+            display: block;
+            font-size: 13px;
+            color: #374151;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .control-group select, .control-group input[type="range"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .control-group input[type="range"] {
+            padding: 0;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0058a3;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .range-value {
+            font-weight: 600;
+            color: #0058a3;
         }
         
         .quadrant-chart {
             width: 100%;
-            height: 300px;
+            height: 400px;
             background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
             position: relative;
             display: flex;
             align-items: center;
@@ -270,40 +374,82 @@
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(90deg, #dee2e6 1px, transparent 1px),
-                linear-gradient(180deg, #dee2e6 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.3;
+                linear-gradient(90deg, #f3f4f6 1px, transparent 1px),
+                linear-gradient(180deg, #f3f4f6 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.5;
+        }
+        
+        .center-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .center-lines::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #9ca3af;
+            opacity: 0.6;
+        }
+        
+        .center-lines::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #9ca3af;
+            opacity: 0.6;
         }
         
         .axis-labels {
             position: absolute;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
         }
         
         .x-axis-label {
-            bottom: 10px;
+            bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 12px;
-            color: #6c757d;
         }
         
         .y-axis-label {
-            left: 10px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%) rotate(-90deg);
-            font-size: 12px;
-            color: #6c757d;
         }
         
         .data-point {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: #007bff;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .data-point:hover {
+            transform: scale(1.2);
+            z-index: 20;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        .data-point.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 4px rgba(0, 88, 163, 0.2);
         }
         
         .status-indicator {
@@ -311,19 +457,19 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            margin-right: 6px;
+            margin-right: 8px;
         }
         
-        .status-good { background: #28a745; }
-        .status-warning { background: #ffc107; }
-        .status-critical { background: #dc3545; }
+        .status-good { background: #10b981; }
+        .status-warning { background: #f59e0b; }
+        .status-critical { background: #ef4444; }
         
         .metric-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f3f4;
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
             font-size: 14px;
         }
         
@@ -331,12 +477,137 @@
             border-bottom: none;
         }
         
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+        }
+        
         .timestamp {
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: 20px;
+            right: 24px;
             font-size: 12px;
             color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+        
+        .legend {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.95);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .legend-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .scenario-info {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            border: 1px solid #e5e7eb;
+            max-width: 220px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .scenario-info.visible {
+            opacity: 1;
+        }
+        
+        .quadrant-labels {
+            position: absolute;
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .quadrant-labels.top-left {
+            top: 24px;
+            left: 24px;
+        }
+        
+        .quadrant-labels.top-right {
+            top: 24px;
+            right: 24px;
+        }
+        
+        .quadrant-labels.bottom-left {
+            bottom: 48px;
+            left: 24px;
+        }
+        
+        .quadrant-labels.bottom-right {
+            bottom: 48px;
+            right: 24px;
+        }
+        
+        .ikea-yellow {
+            background: #FFDA1A;
+            color: #003d82;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+            margin: 24px 0;
+        }
+        
+        .performance-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .performance-excellent {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .performance-good {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .performance-needs-attention {
+            background: #fee2e2;
+            color: #991b1b;
         }
     </style>
 </head>
@@ -345,77 +616,82 @@
         <!-- Global Performance Header -->
         <div class="header">
             <div class="logo-section">
-                <h1>🏠 IKEA Supply Chain Control Tower</h1>
+                <h1>IKEA Supply Chain Control Tower</h1>
                 <p>Integrated Dashboard for Supply Chain Excellence</p>
             </div>
             <div class="kpi-grid">
                 <div class="kpi-card">
-                    <div class="kpi-value">94.2%</div>
+                    <div class="kpi-value" id="perfectOrderRate">94.2%</div>
                     <div class="kpi-label">Perfect Order Rate</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value">8.7%</div>
+                    <div class="kpi-value" id="scCost">8.7%</div>
                     <div class="kpi-label">SC Cost %</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value">12.4</div>
+                    <div class="kpi-value" id="cycleTime">12.4</div>
                     <div class="kpi-label">Days Cycle Time</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-value">€2.1M</div>
+                    <div class="kpi-value" id="dailyThroughput">€2.1M</div>
                     <div class="kpi-label">Daily Throughput</div>
                 </div>
             </div>
-            <div class="timestamp">Last Updated: 24 Aug 2025, 14:32 UTC</div>
+            <div class="timestamp" id="lastUpdated">Last Updated: 24 Aug 2025, 14:32 UTC</div>
         </div>
 
         <div class="main-content">
             <!-- Sidebar with Filters and Alerts -->
             <div class="sidebar">
                 <div class="filter-section">
-                    <h3>🔍 Filters</h3>
+                    <h3>Filters</h3>
                     <div class="filter-group">
-                        <select>
-                            <option>🌍 All Regions</option>
-                            <option>🇪🇺 Europe</option>
-                            <option>🇺🇸 North America</option>
-                            <option>🌏 Asia-Pacific</option>
+                        <select id="regionFilter" onchange="handleFilterChange()">
+                            <option value="all">All Regions</option>
+                            <option value="europe">Europe</option>
+                            <option value="north-america">North America</option>
+                            <option value="asia-pacific">Asia-Pacific</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <select>
-                            <option>📦 All Categories</option>
-                            <option>🛏️ Bedroom</option>
-                            <option>🍽️ Kitchen</option>
-                            <option>🛋️ Living Room</option>
+                        <select id="categoryFilter" onchange="handleFilterChange()">
+                            <option value="all">All Categories</option>
+                            <option value="bedroom">Bedroom</option>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="living-room">Living Room</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <input type="date" value="2025-08-24">
+                        <input type="date" id="dateFilter" value="2025-08-24" onchange="handleDateChange()">
                     </div>
                 </div>
                 
                 <div class="alerts-section">
-                    <h3>🚨 Active Alerts</h3>
-                    <div class="alert-item alert-critical">
-                        <span class="status-indicator status-critical"></span>
-                        <div>
-                            <strong>BEDS stock cover NA: 65%</strong><br>
-                            Risk: €350K lost sales
+                    <h3>Active Alerts</h3>
+                    <div id="alertsContainer">
+                        <div class="alert-item alert-critical">
+                            <span class="status-indicator status-critical"></span>
+                            <div>
+                                <strong>Stock Coverage Critical</strong><br>
+                                Bedroom NA: 65% (Target: >80%)<br>
+                                Risk: €350K lost sales
+                            </div>
                         </div>
-                    </div>
-                    <div class="alert-item alert-warning">
-                        <span class="status-indicator status-warning"></span>
-                        <div>
-                            <strong>LA port fill rate: 82%</strong><br>
-                            Cost overrun: €120K projected
+                        <div class="alert-item alert-warning">
+                            <span class="status-indicator status-warning"></span>
+                            <div>
+                                <strong>Container Fill Rate Low</strong><br>
+                                LA Port: 82% (Target: >85%)<br>
+                                Cost overrun: €120K projected
+                            </div>
                         </div>
-                    </div>
-                    <div class="alert-item alert-info">
-                        <span class="status-indicator status-good"></span>
-                        <div>
-                            <strong>DC-12 delay: 14 hours</strong><br>
-                            Downstream impact possible
+                        <div class="alert-item alert-info">
+                            <span class="status-indicator status-good"></span>
+                            <div>
+                                <strong>Processing Delay</strong><br>
+                                DC-12: 14 hours (Target: <10h)<br>
+                                Downstream impact possible
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -428,29 +704,29 @@
                     <!-- Inventory Management -->
                     <div class="lever-card">
                         <div class="lever-header">
-                            <div class="lever-title">📦 Inventory Management</div>
-                            <span style="font-size: 12px; color: #6c757d;">Target: 40-50 days</span>
+                            <div class="lever-title">Inventory Management</div>
+                            <div class="lever-subtitle">Target: 40-50 days</div>
                         </div>
                         <div class="lever-gauge">
                             <div class="gauge-bg">
-                                <div class="gauge-fill gauge-good" style="width: 75%;"></div>
+                                <div class="gauge-fill gauge-good" id="inventoryGauge" style="width: 75%;"></div>
                             </div>
-                            <div class="gauge-text">45 Days</div>
+                            <div class="gauge-text" id="inventoryValue">45 Days</div>
                         </div>
                         <div class="metric-row">
-                            <span>Stock Cover - Bedroom</span>
-                            <span style="color: #dc3545;">65% ⚠️</span>
+                            <span class="metric-label">Stock Cover - Bedroom</span>
+                            <span class="metric-value performance-needs-attention" id="bedroomStock">65%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Stock Cover - Kitchen</span>
-                            <span style="color: #28a745;">92% ✅</span>
+                            <span class="metric-label">Stock Cover - Kitchen</span>
+                            <span class="metric-value performance-excellent" id="kitchenStock">92%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Stock Cover - Living Room</span>
-                            <span style="color: #ffc107;">78% ⚠️</span>
+                            <span class="metric-label">Stock Cover - Living Room</span>
+                            <span class="metric-value performance-good" id="livingRoomStock">78%</span>
                         </div>
                         <div class="chart-area">
-                            <div class="chart-bars">
+                            <div class="chart-bars" id="inventoryChart">
                                 <div class="chart-bar" style="height: 60%;"></div>
                                 <div class="chart-bar" style="height: 85%;"></div>
                                 <div class="chart-bar" style="height: 45%;"></div>
@@ -465,29 +741,29 @@
                     <!-- Transportation & Logistics -->
                     <div class="lever-card">
                         <div class="lever-header">
-                            <div class="lever-title">🚛 Transportation & Logistics</div>
-                            <span style="font-size: 12px; color: #6c757d;">vs Budget</span>
+                            <div class="lever-title">Transportation & Logistics</div>
+                            <div class="lever-subtitle">vs Budget</div>
                         </div>
                         <div class="lever-gauge">
                             <div class="gauge-bg">
-                                <div class="gauge-fill gauge-warning" style="width: 60%;"></div>
+                                <div class="gauge-fill gauge-warning" id="transportGauge" style="width: 60%;"></div>
                             </div>
-                            <div class="gauge-text">€12.3/m³</div>
+                            <div class="gauge-text" id="transportValue">€12.3/m³</div>
                         </div>
                         <div class="metric-row">
-                            <span>Sea Freight</span>
-                            <span style="color: #28a745;">72% ✅</span>
+                            <span class="metric-label">Sea Freight</span>
+                            <span class="metric-value performance-excellent" id="seaFreight">72%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Rail Transport</span>
-                            <span style="color: #ffc107;">18% ⚠️</span>
+                            <span class="metric-label">Rail Transport</span>
+                            <span class="metric-value performance-good" id="railTransport">18%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Air Freight</span>
-                            <span style="color: #dc3545;">2.1% ⚠️</span>
+                            <span class="metric-label">Air Freight</span>
+                            <span class="metric-value performance-needs-attention" id="airFreight">2.1%</span>
                         </div>
                         <div class="chart-area">
-                            <div class="chart-bars">
+                            <div class="chart-bars" id="transportChart">
                                 <div class="chart-bar" style="height: 80%;"></div>
                                 <div class="chart-bar" style="height: 70%;"></div>
                                 <div class="chart-bar" style="height: 65%;"></div>
@@ -502,29 +778,29 @@
                     <!-- Sourcing & Procurement -->
                     <div class="lever-card">
                         <div class="lever-header">
-                            <div class="lever-title">🏭 Sourcing & Procurement</div>
-                            <span style="font-size: 12px; color: #6c757d;">OTIF Performance</span>
+                            <div class="lever-title">Sourcing & Procurement</div>
+                            <div class="lever-subtitle">OTIF Performance</div>
                         </div>
                         <div class="lever-gauge">
                             <div class="gauge-bg">
-                                <div class="gauge-fill gauge-good" style="width: 85%;"></div>
+                                <div class="gauge-fill gauge-good" id="sourcingGauge" style="width: 85%;"></div>
                             </div>
-                            <div class="gauge-text">91.2%</div>
+                            <div class="gauge-text" id="sourcingValue">91.2%</div>
                         </div>
                         <div class="metric-row">
-                            <span>Tier 1 Suppliers</span>
-                            <span style="color: #28a745;">94% ✅</span>
+                            <span class="metric-label">Tier 1 Suppliers</span>
+                            <span class="metric-value performance-excellent" id="tier1Suppliers">94%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Tier 2 Suppliers</span>
-                            <span style="color: #ffc107;">87% ⚠️</span>
+                            <span class="metric-label">Tier 2 Suppliers</span>
+                            <span class="metric-value performance-good" id="tier2Suppliers">87%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Cost Variance</span>
-                            <span style="color: #28a745;">-2.1% ✅</span>
+                            <span class="metric-label">Cost Variance</span>
+                            <span class="metric-value performance-excellent" id="costVariance">-2.1%</span>
                         </div>
                         <div class="chart-area">
-                            <div class="chart-bars">
+                            <div class="chart-bars" id="sourcingChart">
                                 <div class="chart-bar" style="height: 90%;"></div>
                                 <div class="chart-bar" style="height: 85%;"></div>
                                 <div class="chart-bar" style="height: 95%;"></div>
@@ -539,29 +815,29 @@
                     <!-- Warehouse & Fulfillment -->
                     <div class="lever-card">
                         <div class="lever-header">
-                            <div class="lever-title">🏪 Warehouse & Fulfillment</div>
-                            <span style="font-size: 12px; color: #6c757d;">Picking Accuracy</span>
+                            <div class="lever-title">Warehouse & Fulfillment</div>
+                            <div class="lever-subtitle">Picking Accuracy</div>
                         </div>
                         <div class="lever-gauge">
                             <div class="gauge-bg">
-                                <div class="gauge-fill gauge-good" style="width: 90%;"></div>
+                                <div class="gauge-fill gauge-good" id="warehouseGauge" style="width: 90%;"></div>
                             </div>
-                            <div class="gauge-text">98.7%</div>
+                            <div class="gauge-text" id="warehouseValue">98.7%</div>
                         </div>
                         <div class="metric-row">
-                            <span>Dock-to-Stock Time</span>
-                            <span style="color: #dc3545;">14hr ⚠️</span>
+                            <span class="metric-label">Dock-to-Stock Time</span>
+                            <span class="metric-value performance-needs-attention" id="dockToStock">14hr</span>
                         </div>
                         <div class="metric-row">
-                            <span>Capacity Utilization</span>
-                            <span style="color: #28a745;">87% ✅</span>
+                            <span class="metric-label">Capacity Utilization</span>
+                            <span class="metric-value performance-excellent" id="capacityUtil">87%</span>
                         </div>
                         <div class="metric-row">
-                            <span>Order Fulfillment</span>
-                            <span style="color: #28a745;">96.4% ✅</span>
+                            <span class="metric-label">Order Fulfillment</span>
+                            <span class="metric-value performance-excellent" id="orderFulfillment">96.4%</span>
                         </div>
                         <div class="chart-area">
-                            <div class="chart-bars">
+                            <div class="chart-bars" id="warehouseChart">
                                 <div class="chart-bar" style="height: 95%;"></div>
                                 <div class="chart-bar" style="height: 98%;"></div>
                                 <div class="chart-bar" style="height: 92%;"></div>
@@ -574,33 +850,10 @@
                     </div>
                 </div>
 
+                <div class="section-divider"></div>
+
                 <!-- Trade-Off Simulator Section -->
                 <div class="simulator-section">
-                    <div class="simulator-title">⚖️ Trade-Off Simulator: Cost vs Service Level</div>
-                    <div class="quadrant-chart">
-                        <div class="quadrant-grid"></div>
-                        
-                        <!-- Data Points -->
-                        <div class="data-point" style="left: 60%; bottom: 70%; background: #28a745;" title="Current State"></div>
-                        <div class="data-point" style="left: 25%; bottom: 45%; background: #dc3545;" title="Air Freight +3%"></div>
-                        <div class="data-point" style="left: 75%; bottom: 80%; background: #17a2b8;" title="Sea to Rail +15%"></div>
-                        <div class="data-point" style="left: 45%; bottom: 85%; background: #ffc107;" title="Safety Stock +5%"></div>
-                        
-                        <!-- Axis Labels -->
-                        <div class="axis-labels x-axis-label">Cost Efficiency →</div>
-                        <div class="axis-labels y-axis-label">Service Level →</div>
-                        
-                        <!-- Legend -->
-                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 4px; font-size: 11px;">
-                            <div><span class="status-indicator" style="background: #28a745;"></span>Current State</div>
-                            <div><span class="status-indicator" style="background: #dc3545;"></span>Air Freight +3%</div>
-                            <div><span class="status-indicator" style="background: #17a2b8;"></span>Sea to Rail +15%</div>
-                            <div><span class="status-indicator" style="background: #ffc107;"></span>Safety Stock +5%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+                    <div class="simulator-title">Trade-Off Simulator: Cost vs Service Level</div>
+                    
+                    <!-- Simulator Controls -->
