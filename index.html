@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKEA Supply Chain Control Tower</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0051a0 0%, #0033cc 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .logo-section p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .kpi-card {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .kpi-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .kpi-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 800px;
+        }
+        
+        .sidebar {
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 1px solid #e9ecef;
+        }
+        
+        .filter-section {
+            margin-bottom: 25px;
+        }
+        
+        .filter-section h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #495057;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .alerts-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .alert-critical {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .dashboard-content {
+            padding: 20px;
+            background: white;
+        }
+        
+        .levers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .lever-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .lever-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .lever-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .lever-gauge {
+            width: 120px;
+            height: 60px;
+            position: relative;
+            margin: 0 auto 15px;
+        }
+        
+        .gauge-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 120px 120px 0 0;
+            background: #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gauge-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 120px 120px 0 0;
+            transform-origin: center bottom;
+        }
+        
+        .gauge-good { background: linear-gradient(90deg, #28a745, #20c997); }
+        .gauge-warning { background: linear-gradient(90deg, #ffc107, #fd7e14); }
+        .gauge-critical { background: linear-gradient(90deg, #dc3545, #e83e8c); }
+        
+        .gauge-text {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .chart-area {
+            height: 120px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            height: 80px;
+            gap: 3px;
+        }
+        
+        .chart-bar {
+            width: 12px;
+            background: linear-gradient(180deg, #0051a0, #007bff);
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .simulator-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .simulator-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .quadrant-chart {
+            width: 100%;
+            height: 300px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quadrant-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, #dee2e6 1px, transparent 1px),
+                linear-gradient(180deg, #dee2e6 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+        }
+        
+        .axis-labels {
+            position: absolute;
+        }
+        
+        .x-axis-label {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .y-axis-label {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .data-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #007bff;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .status-good { background: #28a745; }
+        .status-warning { background: #ffc107; }
+        .status-critical { background: #dc3545; }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+        }
+        
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .timestamp {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Global Performance Header -->
+        <div class="header">
+            <div class="logo-section">
+                <h1>🏠 IKEA Supply Chain Control Tower</h1>
+                <p>Integrated Dashboard for Supply Chain Excellence</p>
+            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">94.2%</div>
+                    <div class="kpi-label">Perfect Order Rate</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">8.7%</div>
+                    <div class="kpi-label">SC Cost %</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">12.4</div>
+                    <div class="kpi-label">Days Cycle Time</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">€2.1M</div>
+                    <div class="kpi-label">Daily Throughput</div>
+                </div>
+            </div>
+            <div class="timestamp">Last Updated: 24 Aug 2025, 14:32 UTC</div>
+        </div>
+
+        <div class="main-content">
+            <!-- Sidebar with Filters and Alerts -->
+            <div class="sidebar">
+                <div class="filter-section">
+                    <h3>🔍 Filters</h3>
+                    <div class="filter-group">
+                        <select>
+                            <option>🌍 All Regions</option>
+                            <option>🇪🇺 Europe</option>
+                            <option>🇺🇸 North America</option>
+                            <option>🌏 Asia-Pacific</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <select>
+                            <option>📦 All Categories</option>
+                            <option>🛏️ Bedroom</option>
+                            <option>🍽️ Kitchen</option>
+                            <option>🛋️ Living Room</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <input type="date" value="2025-08-24">
+                    </div>
+                </div>
+                
+                <div class="alerts-section">
+                    <h3>🚨 Active Alerts</h3>
+                    <div class="alert-item alert-critical">
+                        <span class="status-indicator status-critical"></span>
+                        <div>
+                            <strong>BEDS stock cover NA: 65%</strong><br>
+                            Risk: €350K lost sales
+                        </div>
+                    </div>
+                    <div class="alert-item alert-warning">
+                        <span class="status-indicator status-warning"></span>
+                        <div>
+                            <strong>LA port fill rate: 82%</strong><br>
+                            Cost overrun: €120K projected
+                        </div>
+                    </div>
+                    <div class="alert-item alert-info">
+                        <span class="status-indicator status-good"></span>
+                        <div>
+                            <strong>DC-12 delay: 14 hours</strong><br>
+                            Downstream impact possible
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Four Lever Performance Modules -->
+                <div class="levers-grid">
+                    <!-- Inventory Management -->
+                    <div class="lever-card">
+                        <div class="lever-header">
+                            <div class="lever-title">📦 Inventory Management</div>
+                            <span style="font-size: 12px; color: #6c757d;">Target: 40-50 days</span>
+                        </div>
+                        <div class="lever-gauge">
+                            <div class="gauge-bg">
+                                <div class="gauge-fill gauge-good" style="width: 75%;"></div>
+                            </div>
+                            <div class="gauge-text">45 Days</div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Stock Cover - Bedroom</span>
+                            <span style="color: #dc3545;">65% ⚠️</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Stock Cover - Kitchen</span>
+                            <span style="color: #28a745;">92% ✅</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Stock Cover - Living Room</span>
+                            <span style="color: #ffc107;">78% ⚠️</span>
+                        </div>
+                        <div class="chart-area">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 60%;"></div>
+                                <div class="chart-bar" style="height: 85%;"></div>
+                                <div class="chart-bar" style="height: 45%;"></div>
+                                <div class="chart-bar" style="height: 70%;"></div>
+                                <div class="chart-bar" style="height: 55%;"></div>
+                                <div class="chart-bar" style="height: 90%;"></div>
+                                <div class="chart-bar" style="height: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transportation & Logistics -->
+                    <div class="lever-card">
+                        <div class="lever-header">
+                            <div class="lever-title">🚛 Transportation & Logistics</div>
+                            <span style="font-size: 12px; color: #6c757d;">vs Budget</span>
+                        </div>
+                        <div class="lever-gauge">
+                            <div class="gauge-bg">
+                                <div class="gauge-fill gauge-warning" style="width: 60%;"></div>
+                            </div>
+                            <div class="gauge-text">€12.3/m³</div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Sea Freight</span>
+                            <span style="color: #28a745;">72% ✅</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Rail Transport</span>
+                            <span style="color: #ffc107;">18% ⚠️</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Air Freight</span>
+                            <span style="color: #dc3545;">2.1% ⚠️</span>
+                        </div>
+                        <div class="chart-area">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 80%;"></div>
+                                <div class="chart-bar" style="height: 70%;"></div>
+                                <div class="chart-bar" style="height: 65%;"></div>
+                                <div class="chart-bar" style="height: 75%;"></div>
+                                <div class="chart-bar" style="height: 60%;"></div>
+                                <div class="chart-bar" style="height: 85%;"></div>
+                                <div class="chart-bar" style="height: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sourcing & Procurement -->
+                    <div class="lever-card">
+                        <div class="lever-header">
+                            <div class="lever-title">🏭 Sourcing & Procurement</div>
+                            <span style="font-size: 12px; color: #6c757d;">OTIF Performance</span>
+                        </div>
+                        <div class="lever-gauge">
+                            <div class="gauge-bg">
+                                <div class="gauge-fill gauge-good" style="width: 85%;"></div>
+                            </div>
+                            <div class="gauge-text">91.2%</div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Tier 1 Suppliers</span>
+                            <span style="color: #28a745;">94% ✅</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Tier 2 Suppliers</span>
+                            <span style="color: #ffc107;">87% ⚠️</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Cost Variance</span>
+                            <span style="color: #28a745;">-2.1% ✅</span>
+                        </div>
+                        <div class="chart-area">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 90%;"></div>
+                                <div class="chart-bar" style="height: 85%;"></div>
+                                <div class="chart-bar" style="height: 95%;"></div>
+                                <div class="chart-bar" style="height: 88%;"></div>
+                                <div class="chart-bar" style="height: 92%;"></div>
+                                <div class="chart-bar" style="height: 87%;"></div>
+                                <div class="chart-bar" style="height: 91%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warehouse & Fulfillment -->
+                    <div class="lever-card">
+                        <div class="lever-header">
+                            <div class="lever-title">🏪 Warehouse & Fulfillment</div>
+                            <span style="font-size: 12px; color: #6c757d;">Picking Accuracy</span>
+                        </div>
+                        <div class="lever-gauge">
+                            <div class="gauge-bg">
+                                <div class="gauge-fill gauge-good" style="width: 90%;"></div>
+                            </div>
+                            <div class="gauge-text">98.7%</div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Dock-to-Stock Time</span>
+                            <span style="color: #dc3545;">14hr ⚠️</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Capacity Utilization</span>
+                            <span style="color: #28a745;">87% ✅</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Order Fulfillment</span>
+                            <span style="color: #28a745;">96.4% ✅</span>
+                        </div>
+                        <div class="chart-area">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 95%;"></div>
+                                <div class="chart-bar" style="height: 98%;"></div>
+                                <div class="chart-bar" style="height: 92%;"></div>
+                                <div class="chart-bar" style="height: 97%;"></div>
+                                <div class="chart-bar" style="height: 99%;"></div>
+                                <div class="chart-bar" style="height: 94%;"></div>
+                                <div class="chart-bar" style="height: 98%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trade-Off Simulator Section -->
+                <div class="simulator-section">
+                    <div class="simulator-title">⚖️ Trade-Off Simulator: Cost vs Service Level</div>
+                    <div class="quadrant-chart">
+                        <div class="quadrant-grid"></div>
+                        
+                        <!-- Data Points -->
+                        <div class="data-point" style="left: 60%; bottom: 70%; background: #28a745;" title="Current State"></div>
+                        <div class="data-point" style="left: 25%; bottom: 45%; background: #dc3545;" title="Air Freight +3%"></div>
+                        <div class="data-point" style="left: 75%; bottom: 80%; background: #17a2b8;" title="Sea to Rail +15%"></div>
+                        <div class="data-point" style="left: 45%; bottom: 85%; background: #ffc107;" title="Safety Stock +5%"></div>
+                        
+                        <!-- Axis Labels -->
+                        <div class="axis-labels x-axis-label">Cost Efficiency →</div>
+                        <div class="axis-labels y-axis-label">Service Level →</div>
+                        
+                        <!-- Legend -->
+                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); padding: 10px; border-radius: 4px; font-size: 11px;">
+                            <div><span class="status-indicator" style="background: #28a745;"></span>Current State</div>
+                            <div><span class="status-indicator" style="background: #dc3545;"></span>Air Freight +3%</div>
+                            <div><span class="status-indicator" style="background: #17a2b8;"></span>Sea to Rail +15%</div>
+                            <div><span class="status-indicator" style="background: #ffc107;"></span>Safety Stock +5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
